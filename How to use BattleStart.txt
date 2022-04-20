@@ -1,0 +1,56 @@
+
+gamestart(
+screen-length,【int】How long the screen will be
+screen-width,【int】How high the screen will be
+player-x,【int】Where the player will be born - x
+player-y,【int】Where the player will be born - y
+player-image, 【string】The url of player's picture
+background-image, 【string】The url of background's picture, must be prepared to fix the screen size, can leave a 0 if don't need
+mode: string with seven digit, 
+===========================
+【string】A magic code storing basic game mode settings:
+    1st: have no enemy then 0, if > 0 then number of enemies
+    2nd: have no pick-up items then 0, if > 0 then number of items in the screen at the same time
+    3rd: have no time limit then 0, if > 0 then how many 10s you have
+    4th: extension of 3rd, time limit = 3rd*10s + 4th*10s
+    5th: have no score requirement then 0, if > 0 then how many score should get
+    6th: extension of 5th, score requirement = 5th + 6th
+    7th: if 0 then items will never refresh after an item picked, if >0 then a new item will be added in a random place when another item picked
+    For example, 5294921 means a game require (9+2) score in (90+40) seconds, the field have 5 enemies and 2 items, an new item will refresh when another picked
+===========================
+enemy-list with 8 elements, 
+【list】A list storing basic enemies settings:
+    1st and 2nd: minimum and maximum of x(*100), enemy will only appears randomly in this areas, if 1st = 2nd, will not landed randomly.
+    3rd and 4th: minimum and maximum of y(*100), enemy will only appears randomly in this areas, if 3rd = 4th, will not landed randomly.
+    5th: movement type, 0-never move, 1-horizonal, 2-vertical, 3-diagonal
+    6th: max movement speed(*0.05)
+    7th: 0-cannot spell, 1-can use spell1, 2-can use spell2, 3-can use spell3, 4-can use 1 and 2, 5-can use all the spells
+    8th: image of enemy 【string with picture url】
+===========================
+item-list with 6 elements,
+【list】A list storing basic items settings, player picks items to get score:
+    1st and 2nd: same as enemy
+    3rd and 4th: same as enemy
+    5th: movement speed
+    6th: image of items 【string with picture url】 
+===========================
+spells1-bullets-list with 6 elements, 
+spells2-bullets-list with 6 elements,
+spells3-bullets-list with 6 elements
+【list】Three lists storing 3 sorts of bullet settings:
+    1st: image of bullets
+    2nd: number of bullets in 1 spell
+    3rd: speed
+    4th: spell type, 0-straightly shoot, 1-draw a circle
+    5th: angle range, if there are more than 1 bullets, their angles will be divided into different angles in this range.
+    6th: how large the bullets are
+)
+==========================
+Some example operations:
+
+battlegame(600,400,300,200,"art/seal32x32.png",0,"5230911",[1,5,1,3,3,1,1,"art/bear32x32walk1.png"],[1,5,1,3,2,"art/fish1fish32x32.png"],["art/bullet32x32.png",2,2,0,0,32],["art/bullet32x32.png",2,2,0,0,32],["art/bullet32x32.png",2,2,0,0,32])
+battlegame(600,400,300,200,"art/seal32x32.png",0,"4030001",[1,5,1,3,3,1,5,"art/bear32x32walk1.png"],[1,5,1,3,2,"art/fish1fish32x32.png"],["art/bullet32x32.png",2,2,0,0,32],["art/bullet32x32.png",2,2,0,0,32],["art/bullet32x32.png",2,2,0,0,32])
+battlegame(1000,500,900,400,"art/seal32x32.png",0,"9433911",[1,9,1,4,1,5,5,"art/bear32x32walk1.png"],[1,9,1,3,2,"art/fish1fish32x32.png"],["art/bullet32x32.png",8,2,0,0.5,32],["art/bullet32x32.png",16,3,0,0,32],["art/bullet32x32.png",1,5,0,0,32])
+
+==========================
+battlegame returns 1 to stand for victory
